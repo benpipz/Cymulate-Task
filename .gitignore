@@ -1,24 +1,73 @@
-# Nestjs specific
-/dist
-/node_modules
-/build
-/tmp
-
-# Logs
-logs
+# ====================================
+# Node / Typescript Common
+# ====================================
+node_modules/
+dist/
+build/
+coverage/
+tmp/
+temp/
 *.log
 npm-debug.log*
-pnpm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-lerna-debug.log*
+pnpm-debug.log*
 
-# dotenv environment variable files
+# Environment Files
 .env
-.env.development
-.env.test
-.env.production
+.env*.local
+!.env.example
 
-# temp directory
-.temp
-.tmp
+# Typescript build
+*.tsbuildinfo
+
+# ====================================
+# Vite / React Specific
+# ====================================
+.vite/
+.vitest/
+*.local
+*.cache
+*.DS_Store
+
+# React build output (if build folder used)
+build/
+
+# ====================================
+# NestJS Specific
+# ====================================
+/dist
+/.idea
+/.output
+/.cache
+*.pid
+
+# ====================================
+# OS and Editor Files
+# ====================================
+.DS_Store
+Thumbs.db
+
+# VSCode & IntelliJ
+.vscode/
+.idea/
+
+# ====================================
+# Optional: Ignore Docker files (if you don’t commit them)
+# ====================================
+# docker-compose.override.yml
+# *.dockerfile
+
+# ====================================
+# Optional: Firebase, AWS, Secret keys, etc
+# ====================================
+*.pem
+*.key
+*.p12
+
+# ====================================
+# Optional: lock files (if using only one package manager)
+# ====================================
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
