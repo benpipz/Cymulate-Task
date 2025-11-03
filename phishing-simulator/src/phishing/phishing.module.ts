@@ -6,11 +6,11 @@ import {
   PhishingTarget,
   PhishingTargetSchema,
 } from './entities/phishing.entity';
-import { EmailModule } from 'src/email/email.module';
+import { PhishingEmailModule } from 'src/phishing-email/phishing-email.module';
 
 @Module({
   imports: [
-    EmailModule,
+    PhishingEmailModule,
     MongooseModule.forFeature([
       { name: PhishingTarget.name, schema: PhishingTargetSchema },
     ]),

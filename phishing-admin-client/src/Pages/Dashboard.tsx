@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import SimulateForm from '../Components/SimulateForm';
-import AttemptsList from '../Components/AttemptsList';
+import PhishingSimulationForm from '../Components/PhishingSimulationForm';
+import PhishingAttemptsList from '../Components/PhishingAttemptsList';
 import Layout from '../layout/Layout';
 
 export default function Dashboard() {
@@ -13,48 +13,74 @@ export default function Dashboard() {
       <div style={styles.tabContainer}>
         <button
           onClick={() => setTab('simulate')}
-          style={{
-            ...styles.tabButton,
-            ...(tab === 'simulate' ? styles.activeTab : {}),
-          }}
+          style={
+            tab === 'simulate'
+              ? { ...styles.tabButton, ...styles.activeTab }
+              : styles.tabButton
+          }
         >
           Simulate Attack
         </button>
         <button
           onClick={() => setTab('attempts')}
-          style={{
-            ...styles.tabButton,
-            ...(tab === 'attempts' ? styles.activeTab : {}),
-          }}
+          style={
+            tab === 'attempts'
+              ? { ...styles.tabButton, ...styles.activeTab }
+              : styles.tabButton
+          }
         >
           Ongoing Attempts
         </button>
       </div>
 
       <div style={styles.contentWrapper}>
-        {tab === 'simulate' ? <SimulateForm /> : <AttemptsList />}
+        {tab === 'simulate' ? <PhishingSimulationForm /> : <PhishingAttemptsList />}
       </div>
     </Layout>
   );
 }
 
 const styles: Record<string, React.CSSProperties> = {
-  title: { textAlign: 'center', marginBottom: '20px', color: '#333' },
-  tabContainer: { display: 'flex', justifyContent: 'center', gap: '12px', marginBottom: '24px' },
+  title: {
+    textAlign: 'center',
+    marginBottom: '24px',
+    color: '#1a1a1a',
+    fontSize: '32px',
+    fontWeight: '700',
+    letterSpacing: '-0.5px',
+  },
+  tabContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    gap: '8px',
+    marginBottom: '32px',
+    borderBottom: '2px solid #e0e0e0',
+    paddingBottom: '0',
+  },
   tabButton: {
-    padding: '10px 20px',
-    borderWidth: '1px',
-    borderStyle: 'solid',
-    borderColor: '#ccc',
-    borderRadius: '8px',
-    backgroundColor: '#f1f1f1',
+    padding: '12px 24px',
+    border: 'none',
+    borderBottomWidth: '3px',
+    borderBottomStyle: 'solid',
+    borderBottomColor: 'transparent',
+    borderRadius: '8px 8px 0 0',
+    backgroundColor: 'transparent',
+    color: '#666',
     cursor: 'pointer',
     transition: 'all 0.2s ease',
+    fontSize: '15px',
+    fontWeight: '500',
+    position: 'relative',
+    bottom: '-2px',
   },
   activeTab: {
-    backgroundColor: '#007bff',
-    color: 'white',
-    borderColor: '#007bff',
+    backgroundColor: 'transparent',
+    color: '#1976d2',
+    borderBottomColor: '#1976d2',
+    fontWeight: '600',
   },
-  contentWrapper: { padding: '16px' },
+  contentWrapper: {
+    padding: '24px 0',
+    minHeight: '400px',
+  },
 };

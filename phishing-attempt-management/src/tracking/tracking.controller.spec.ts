@@ -1,17 +1,17 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { TrackingController } from './tracking.controller';
-import { TrackingService } from './tracking.service';
+import { PhishingClickTrackingController } from './tracking.controller';
+import { PhishingClickTrackingService } from './tracking.service';
 
-describe('TrackingController', () => {
-  let controller: TrackingController;
+describe('PhishingClickTrackingController', () => {
+  let controller: PhishingClickTrackingController;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [TrackingController],
-      providers: [TrackingService],
+      controllers: [PhishingClickTrackingController],
+      providers: [PhishingClickTrackingService],
     }).compile();
 
-    controller = module.get<TrackingController>(TrackingController);
+    controller = module.get<PhishingClickTrackingController>(PhishingClickTrackingController);
   });
 
   it('should be defined', () => {

@@ -1,12 +1,12 @@
 import { Controller, Get, Param } from '@nestjs/common';
-import { TrackingService } from './tracking.service';
+import { PhishingClickTrackingService } from './tracking.service';
 
 @Controller('tracking')
-export class TrackingController {
-  constructor(private readonly trackingService: TrackingService) {}
+export class PhishingClickTrackingController {
+  constructor(private readonly trackingService: PhishingClickTrackingService) {}
 
   @Get(':hashCode')
-  Track(@Param('hashCode') hashCode: string) {
-    return this.trackingService.hashCode(hashCode);
+  trackClick(@Param('hashCode') hashCode: string) {
+    return this.trackingService.trackClickByHashCode(hashCode);
   }
 }

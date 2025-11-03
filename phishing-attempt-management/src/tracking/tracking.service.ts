@@ -3,17 +3,17 @@ import { InjectModel } from '@nestjs/mongoose';
 import {
   PhishingTarget,
   PhishingTargetDocument,
-} from './entities/tracking.entity';
+} from './entities/phishing-target.entity';
 import { Model } from 'mongoose';
 
 @Injectable()
-export class TrackingService {
+export class PhishingClickTrackingService {
   constructor(
     @InjectModel(PhishingTarget.name)
     private phishingTargetModel: Model<PhishingTargetDocument>,
   ) {}
 
-  async hashCode(hashCode: string) {
+  async trackClickByHashCode(hashCode: string) {
     const target = await this.phishingTargetModel
       .findOneAndUpdate(
         { targetHashcode: hashCode },

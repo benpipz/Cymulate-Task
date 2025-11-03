@@ -1,0 +1,67 @@
+services:
+  phishing-simulator:
+    container_name: simulator-service
+    build:
+      context: ./phishing-simulator
+      dockerfile: Dockerfile
+      tags:
+        - phishing-simulator-api:latest
+    image: phishing-simulator-api:latest
+    ports:
+      - '3000:3000'
+    restart: unless-stopped
+    environment:
+      MONGO_URI: ${MONGO_URI}
+      SOURCE_EMAIL: ${SOURCE_EMAIL}
+      GMAIL_APP_PASS: ${GMAIL_APP_PASS}
+      PHISHING_LINK_BASE_URL: ${PHISHING_LINK_BASE_URL}
+    depends_on:
+      mongo:
+        condition: service_healthy
+
+  phishing-management:
+    container_name: management-service
+    build:
+      context: ./phishing-attempt-management
+      dockerfile: Dockerfile
+      tags:
+        - phishing-management:latest
+    image: phishing-management:latest
+    ports:
+      - '3001:3001'
+    restart: unless-stopped
+    environment:
+      MONGO_URI: ${MONGO_URI}
+    depends_on:
+      mongo:
+        condition: service_healthy
+
+  mongo:
+    image: mongo:7
+    container_name: mongoDB
+    restart: unless-stopped
+    ports:
+      - '27017:27017'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+    volumes:
+      - mongo-db:/data/db
+    healthcheck:
+      test: ['CMD', 'mongosh', '--eval', "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  client:
+    container_name: phishing-client
+    build:
+      context: ./phishing-admin-client
+      dockerfile: Dockerfile
+      tags:
+        - phishing-client:latest
+    image: phishing-client
+    ports:
+      - '5173:5173'
+volumes:
+  mongo-db:

@@ -8,15 +8,15 @@ import { ConfigService } from '@nestjs/config';
 import * as nodemailer from 'nodemailer';
 
 @Injectable()
-export class EmailService implements OnModuleInit {
+export class PhishingEmailService implements OnModuleInit {
   private transporter: nodemailer.Transporter;
   private readonly fromMail: string;
-  private readonly phisingLinkBaseUrl: string;
+  private readonly phishingLinkBaseUrl: string;
 
   constructor(private readonly configModule: ConfigService) {
     this.fromMail =
       this.configModule.get<string>('SOURCE_EMAIL') ?? 'default@gmail.com';
-    this.phisingLinkBaseUrl =
+    this.phishingLinkBaseUrl =
       this.configModule.get<string>('PHISHING_LINK_BASE_URL') ??
       'http://localhost:3000/tracking/';
   }
@@ -42,7 +42,7 @@ export class EmailService implements OnModuleInit {
       console.error('Email transporter is not configured.');
       return;
     }
-    const phshingLink = `${this.phisingLinkBaseUrl}${targetHashcode}`;
+    const phishingLink = `${this.phishingLinkBaseUrl}${targetHashcode}`;
     try {
       const response = await this.transporter.sendMail({
         from: `"LinkedIn" <${this.fromMail}>`,
@@ -50,7 +50,7 @@ export class EmailService implements OnModuleInit {
         subject: `Hi ${name}`,
         html: `<h1>Hi ${name}!</h1>
             <p>Thanks for joining us</p>
-            <a href="${phshingLink}">${phshingLink}</a>`,
+            <a href="${phishingLink}">${phishingLink}</a>`,
       });
       if (!response.accepted || response.accepted.length === 0) {
         throw new ServiceUnavailableException(

@@ -5,12 +5,12 @@ import { MongooseModule } from '@nestjs/mongoose';
 import {
   PhishingTarget,
   PhishingTargetSchema,
-} from 'src/tracking/entities/tracking.entity';
-import { TrackingModule } from 'src/tracking/tracking.module';
+} from 'src/link-click-handler/entities/phishing-target.entity';
+import { LinkClickHandlerModule } from 'src/link-click-handler/link-click-handler.module';
 
 @Module({
   imports: [
-    TrackingModule,
+    LinkClickHandlerModule,
     MongooseModule.forFeature([
       { name: PhishingTarget.name, schema: PhishingTargetSchema },
     ]),

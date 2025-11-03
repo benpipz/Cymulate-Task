@@ -1,15 +1,35 @@
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  MaxLength,
+} from 'class-validator';
 import { Transform } from 'class-transformer';
-import { Optional } from '@nestjs/common';
 
+/**
+ * DTO for creating a new phishing simulation attempt
+ */
 export class CreatePhishingDto {
-  @IsNotEmpty({ message: 'User email is required' })
-  @IsString({ message: 'User email must be a string' })
+  /**
+   * Target email address for the phishing simulation
+   * @example user@example.com
+   */
+  @IsNotEmpty({ message: 'Target email is required' })
+  @IsString({ message: 'Target email must be a string' })
   @IsEmail({}, { message: 'Invalid email format' })
-  @Transform(({ value }) => value?.trim().toLowerCase()) // normalize input
+  @Transform(({ value }) => value?.trim().toLowerCase())
   targetMail: string;
 
+  /**
+   * Optional name of the target (defaults to "Client")
+   * @example John Doe
+   */
+  @IsOptional()
   @IsString({ message: 'Target name must be a string' })
-  @Optional()
-  targetName: string = 'Client';
+  @MaxLength(100, {
+    message: 'Target name must be less than 100 characters',
+  })
+  @Transform(({ value }) => value?.trim())
+  targetName?: string = 'Client';
 }
